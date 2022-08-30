@@ -152,7 +152,10 @@ def pregunta_05():
         dict_final[letter][0] = max(dict_final[letter][0], int(row[1]))
         dict_final[letter][1] = min(dict_final[letter][1], int(row[1]))
 
-    return dict_final
+    for i in dict_final:
+        dict_final[i] = tuple(dict_final[i])
+        
+    print(dict_final)
 
 
 def pregunta_06():
@@ -198,10 +201,13 @@ def pregunta_06():
                 dict_passwords[key][0] = min(dict_passwords[key][0], value)
                 dict_passwords[key][1] = max(dict_passwords[key][1], value)
 
-    result = list(dict_passwords.items())
-    result.sort(key = lambda x: x[0])
+        for i in dict_passwords:
+            dict_passwords[i] = tuple(dict_passwords[i])
 
-    return result
+        result = list(dict_passwords.items())
+        result.sort(key = lambda x: x[0])
+
+        print(result)
 
 
 def pregunta_07():
