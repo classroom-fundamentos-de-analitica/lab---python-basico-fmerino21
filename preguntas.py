@@ -160,7 +160,7 @@ def pregunta_05():
         aux = tuple([i, dict_final[i][0], dict_final[i][1]])
         result.append(aux)
 
-    print(result)
+    return result
 
 
 def pregunta_06():
@@ -212,7 +212,7 @@ def pregunta_06():
         result.append(aux)
 
     result.sort()
-    print(result)
+    return result
 
 
 def pregunta_07():
