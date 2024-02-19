@@ -12,7 +12,6 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 """
 
-
 def pregunta_01():
     """
     Retorne la suma de la segunda columna.
@@ -21,7 +20,14 @@ def pregunta_01():
     214
 
     """
-    return
+    input_file = open('./data.csv', 'r').readlines()
+    sum = 0
+    for row in input_file:
+        row = row.replace('\t', '')
+        sum += int(row[1])
+
+    return sum
+
 
 
 def pregunta_02():
@@ -39,7 +45,19 @@ def pregunta_02():
     ]
 
     """
-    return
+    input_file = open('./data.csv', 'r').readlines()
+    dict = {}
+
+    for row in input_file:
+        row = row.replace('\t', '')
+        
+        if row[0] not in dict: dict[row[0]] = 1
+        else: dict[row[0]] += 1
+
+    letters = list(dict.items())
+    letters.sort(key = lambda x: x[0])
+    
+    return letters
 
 
 def pregunta_03():
@@ -57,7 +75,18 @@ def pregunta_03():
     ]
 
     """
-    return
+    input_file = open('./data.csv', 'r').readlines()
+    dict_final = {'A': 0, 'B':0, 'C':0, 'D':0, 'E':0}
+
+    for letter in dict_final:
+        for row in input_file:
+            row = row.replace('\t', '')
+
+            if row[0] == letter:
+                dict_final[letter] += int(row[1])
+
+    return list(dict_final.items())
+
 
 
 def pregunta_04():
@@ -82,8 +111,21 @@ def pregunta_04():
     ]
 
     """
-    return
+    input_file = open('./data.csv', 'r').readlines()
+    dict_months = {}
 
+    for row in input_file:
+        row = row.split('\t')
+        date = row[2].split('-')
+        
+        if date[1] not in dict_months: dict_months[date[1]] = 1
+        else: dict_months[date[1]] += 1
+
+    months = list(dict_months.items())
+    months.sort(key = lambda x: x[0])
+
+    return months
+    
 
 def pregunta_05():
     """
@@ -100,7 +142,25 @@ def pregunta_05():
     ]
 
     """
-    return
+    input_file = open('./data.csv', 'r').readlines()
+    dict_final = {'A':[0,11], 'B':[0,11], 'C':[0,11], 'D':[0,11], 'E':[0,11]}
+
+    for row in input_file:
+        row = row.replace('\t', '')
+        
+        letter = row[0]
+        dict_final[letter][0] = max(dict_final[letter][0], int(row[1]))
+        dict_final[letter][1] = min(dict_final[letter][1], int(row[1]))
+
+    for i in dict_final:
+        dict_final[i] = tuple(dict_final[i])
+        
+    result = []
+    for i in dict_final:
+        aux = tuple([i, dict_final[i][0], dict_final[i][1]])
+        result.append(aux)
+
+    return result
 
 
 def pregunta_06():
@@ -125,7 +185,34 @@ def pregunta_06():
     ]
 
     """
-    return
+    input_file = open('./data.csv', 'r').readlines()
+    dict_passwords = {}
+
+    for row in input_file:
+        row = row.split('\t')
+        
+        passwords = row[4].replace('\n', '').split(',')
+        
+        for password in passwords:
+            aux = password.split(':')
+            key = aux[0]
+            value = int(aux[1])
+
+            if key not in dict_passwords:
+                dict_passwords[key] = [11, 0]
+                dict_passwords[key][0] = min(dict_passwords[key][0], value)
+                dict_passwords[key][1] = max(dict_passwords[key][1], value)
+            else:
+                dict_passwords[key][0] = min(dict_passwords[key][0], value)
+                dict_passwords[key][1] = max(dict_passwords[key][1], value)
+
+    result = []
+    for i in dict_passwords:
+        aux = tuple([i, dict_passwords[i][0], dict_passwords[i][1]])
+        result.append(aux)
+
+    result.sort()
+    return result
 
 
 def pregunta_07():
@@ -149,7 +236,16 @@ def pregunta_07():
     ]
 
     """
-    return
+    input_file = open('./data.csv', 'r').readlines()
+    dict = {0: [], 1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[]}
+
+    for row in input_file:
+        row = row.split('\t')
+
+        dict[int(row[1])].append(row[0])
+
+    result = list(dict.items())
+    return result
 
 
 def pregunta_08():
@@ -174,7 +270,20 @@ def pregunta_08():
     ]
 
     """
-    return
+    input_file = open('./data.csv', 'r').readlines()
+    dict = {0: [], 1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[]}
+
+    for row in input_file:
+        row = row.split('\t')
+
+        if row[0] not in dict[int(row[1])]:
+            dict[int(row[1])].append(row[0])
+
+    for i in dict:
+        dict[i] = sorted(dict[i])
+
+    result = list(dict.items())
+    return result
 
 
 def pregunta_09():
@@ -197,7 +306,25 @@ def pregunta_09():
     }
 
     """
-    return
+    input_file = open('./data.csv', 'r').readlines()
+    dic = {}
+
+    for row in input_file:
+        row = row.split('\t')
+        passwords = row[4].replace('\n', '').split(',')
+        
+        for password in passwords:
+            aux = password.split(':')
+            key = aux[0]
+
+            if key not in dic: dic[key] = 1
+            else: dic[key] += 1
+
+    l = list(dic.items())
+    l.sort()
+
+    result = {k:v for k,v in l}
+    return result
 
 
 def pregunta_10():
@@ -218,7 +345,26 @@ def pregunta_10():
 
 
     """
-    return
+    input_file = open('./data.csv', 'r').readlines()
+    result = []
+
+    for row in input_file:
+        row = row.split('\t')
+        
+        len_row_4 = len(row[3].split(','))
+        len_row_5 = len(row[4].split(','))
+
+        el = [0,0,0]
+        el[0] = row[0]
+        el[1] = len_row_4
+        el[2] = len_row_5
+
+        result.append(el)
+
+    for i in range(len(result)):
+        result[i] = tuple(result[i])
+
+    return result
 
 
 def pregunta_11():
@@ -239,7 +385,17 @@ def pregunta_11():
 
 
     """
-    return
+    input_file = open('./data.csv', 'r').readlines()
+    dict = {'a':0, 'b':0, 'c':0, 'd':0, 'e':0, 'f':0, 'g':0}
+
+    for row in input_file:
+        row = row.split('\t')
+        
+        
+        for i in row[3].split(','):
+            dict[i] += int(row[1])
+
+    return dict
 
 
 def pregunta_12():
@@ -257,4 +413,13 @@ def pregunta_12():
     }
 
     """
-    return
+    input_file = open('./data.csv', 'r').readlines()
+    dict = {'A':0, 'B':0, 'C':0, 'D':0, 'E':0}
+
+    for row in input_file:
+        row = row.split('\t')
+
+        for i in row[4].split(','):
+            dict[row[0]] += int(i.split(':')[1])
+
+    return dict
